@@ -44,10 +44,10 @@ const config: Config = {
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
-        colors:tailwindColors,
+        colors: tailwindColors,
         extend: {},
     },
-    darkMode:'class',
+    darkMode: 'class',
     plugins: [],
 }
 export default config
