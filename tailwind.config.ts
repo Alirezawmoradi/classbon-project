@@ -1,11 +1,30 @@
-import type {Config} from 'tailwindcss'
-import {colord, extend} from "colord";
+import { Config } from "tailwindcss";
+import { colord, extend } from "colord";
 import mixPlugin from "colord/plugins/mix";
 
 extend([mixPlugin]);
-const generateDarkenColorFrom = (input: string, percentage = 0.07): string => colord(input).darken(percentage).toHex();
-const generateForegroundColorFrom = (input: string, percentage = 0.8): string => colord(input).mix(colord(input).isDark() ? 'white' : 'black').toHex();
-export const tailwindColors: { [key: string]: string } = {
+
+export function generateDarkenColorFrom(
+    input: string,
+    percentage = 0.07
+): string {
+    return colord(input).darken(percentage).toHex();
+}
+
+export function generateForegroundColorFrom(
+    input: string,
+    percentage = 0.8
+): string {
+    return colord(input)
+        .mix(colord(input).isDark() ? "white" : "black", percentage)
+        .toHex();
+}
+
+type ColorObject = {
+    [key: string]: string;
+};
+
+export const tailwindColors: ColorObject = {
     current: "currentColor",
     transparent: "transparent",
     white: "#F9F9F9",
@@ -38,20 +57,27 @@ export const tailwindColors: { [key: string]: string } = {
     "error-content": generateForegroundColorFrom("#f87272"),
     "gradient-first": "#34eaa0",
     "gradient-second": "#0fa2e9",
-}
+};
+
 const config: Config = {
-    content: [
-        './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    ],
+    content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
     theme: {
         colors: tailwindColors,
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: '1rem',
+                lg: '3rem',
+                xl: '4rem',
+            },
+        },
         extend: {
             backgroundImage: {
                 'hero-pattern': "url('/images/tile.svg')"
             }
-        },
+        }
     },
-    darkMode: 'class',
+    darkMode: "class",
     plugins: [],
-}
-export default config
+};
+export default config;

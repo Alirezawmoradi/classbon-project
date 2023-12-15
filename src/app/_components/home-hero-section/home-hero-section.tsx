@@ -10,7 +10,7 @@ export const HomeHeroSection: React.FC = () => {
                     <h3 className='text-xl dark:text-info xl:text-2xl'>
                         خوش اومدی به ...
                     </h3>
-                    <h1 className='text-3xl font-black gradient lg:text-3xl xl:text-5xl'>
+                    <h1 className='text-3xl font-black gradient lg:text-3xl xl:text-4xl'>
                         مسیر صعود به قله‌های برنامه‌نویسی
                     </h1>
                     <p className='text-lg font-bold leading-8'>
