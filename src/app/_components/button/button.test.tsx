@@ -1,7 +1,6 @@
 import {describe} from "node:test";
 import {screen, render} from "@testing-library/react";
 import {Button} from ".";
-import {buttons} from "polished";
 
 describe('Button Component', () => {
     test('renders a default button', () => {

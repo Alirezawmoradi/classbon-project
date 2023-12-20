@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {Badge} from "@/app/_components/badge";
 import {IconArrowLeftFill, IconClock} from "@/app/_components/icons/icons";
+import {Price} from "@/app/_components/price/price";
 
 export type CourseCardProps = CourseSummary & {};
 
@@ -40,12 +41,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                 <p>
                     {subTitle}
                 </p>
-                <div>
+                <div className='flex justify-between items-center mt-3'>
                     <Badge variant='warning'>
                         <IconClock width={16} height={16}/>
                         {duration}
                     </Badge>
-                    {basePrice}
+                    <Price price={basePrice} size='small'/>
                 </div>
             </div>
             <Link href={`/course/${slug}`} className='card-footer justify-center animated-icon'>
