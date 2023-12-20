@@ -1,6 +1,7 @@
 import React from "react";
 import {Button} from "@/app/_components/button";
 import Image from "next/image";
+import {IconArrowLeftFill} from "@/app/_components/icons/icons";
 
 export const HomeHeroSection: React.FC = () => {
     return (
@@ -18,8 +19,11 @@ export const HomeHeroSection: React.FC = () => {
                         کلاسبن می‌تونی بدون محدودیت به قله‌های بالاتر صعود کنی. ما همیشه
                         هواتو داریم.
                     </p>
-                    <div className='mt-5 gap-4 flex'>
-                        <Button variant='primary' size='large'>دوره های ری اکت و نکست</Button>
+                    <div className='mt-5 gap-4 flex justify-center xl:justify-start'>
+                        <Button variant='primary' size='large'>
+                            دوره های ری اکت و نکست
+                            <IconArrowLeftFill fill='currentColor'/>
+                        </Button>
                         <Button variant='neutral' size='large'>مشاوره برنامه نویسی</Button>
                     </div>
                     <Image
