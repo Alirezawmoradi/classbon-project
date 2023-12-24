@@ -1,5 +1,6 @@
 import {CourseDetails} from "@/types/course-details.interface";
 import {API_URL} from "@/configs/global";
+import {Rating} from "@/app/_components/rating/rating";
 
 export async function generateStaticParams() {
     const slugs = await fetch(`${API_URL}/courses/slugs`).then((res) =>
@@ -33,7 +34,9 @@ export default async function CourseDetails({params}: { params: { slug: string }
                 </h2>
                 <div className='mt-5'>Video Player Component</div>
             </div>
-            <div className='bg-secondary col-span-10 xl:col-span-3'></div>
+            <div className='col-span-10 xl:col-span-3'>
+                <Rating rate={3} size='small' variant='info'/>
+            </div>
             <div className='bg-info col-span-10 xl:col-span-6'></div>
             <div className='bg-warning col-span-10 xl:col-span-4'></div>
         </div>
