@@ -11,7 +11,7 @@ export const Rating: React.FC<RatingProps> = ({rate, className, size = 'normal',
         large: 30
     }
     return (
-        <div className={`flex gap-1 ${className}`}>
+        <div className={`flex gap-1 ${className}`} data-testid='rating'>
             {
                 [1, 2, 3, 4, 5].map((index) => (
                     <IconStar key={`star-${index}`}
