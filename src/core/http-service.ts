@@ -58,12 +58,12 @@ httpService.interceptors.response.use(
                         ...errorData,
                         detail: 'خطای سرور'
                     } as UnHandledException
-                } else {
-                    throw {
-                        detail: 'خطای شبکه'
-                    } as NetworkError
                 }
             }
+        } else {
+            throw {
+                detail: 'خطای شبکه'
+            } as NetworkError
         }
     }
 );
