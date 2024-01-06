@@ -11,4 +11,5 @@ export interface CourseComment {
 export interface CourseCommentList {
     data: CourseComment[],
     nextPage: number;
+
 }
