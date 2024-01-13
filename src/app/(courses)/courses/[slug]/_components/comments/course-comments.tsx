@@ -1,14 +1,21 @@
 'use client';
-
-import {useEffect} from "react";
-import {readData} from "@/core/http-servicw/http-service";
+import {useParams} from "next/navigation";
+import {useCourseComments} from "@/app/(courses)/courses/[slug]/_apis/get-comments";
 
 const CourseComments = () => {
-    useEffect(() => {
-        readData('./validation-error');
+    const {slug} = useParams();
+    const {data: comments} = useCourseComments({
+        params: {
+            slug: slug as string,
+            page: 1
+        }
     })
     return (
-        <></>
+        <>
+            {
+                comments?.data.map(p => <p key={p.id} className='mb-8'>{p.commentText}</p>)
+            }
+        </>
     )
 }
 export default CourseComments;
