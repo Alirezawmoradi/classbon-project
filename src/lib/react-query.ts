@@ -1,4 +1,4 @@
-import {QueryCache, QueryClient} from "react-query";
+import {QueryCache, QueryClient} from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
 
@@ -12,8 +12,8 @@ export const queryClient = new QueryClient({
         queries: {
             retry: false,
             refetchOnWindowFocus: false,
-            useErrorBoundary: false,
-            cacheTime: 1000 * 60 * 60 * 24
+            throwOnError: false,
+            gcTime: 1000 * 60 * 60 * 24
         }
     }
 })
