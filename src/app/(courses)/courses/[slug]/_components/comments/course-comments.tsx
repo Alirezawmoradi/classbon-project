@@ -13,7 +13,10 @@ const CourseComments = () => {
     return (
         <>
             {
-                comments?.data.map(p => <p key={p.id} className='mb-8'>{p.commentText}</p>)
+                comments?.data.map(p =>
+                    <p key={p.id} className='mb-8'>
+                        {p.commentText}
+                    </p>)
             }
         </>
     )
