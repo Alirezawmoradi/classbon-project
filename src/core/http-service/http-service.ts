@@ -1,7 +1,7 @@
 import {API_URL} from '@/configs/global';
 import {ApiError} from '@/types/http-errors.interface';
 import axios, {AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse} from "axios";
-import {errorHandler, networkErrorStrategy} from "@/core/http-servicw/http-error-strategies";
+import {errorHandler, networkErrorStrategy} from "@/core/http-service/http-error-strategies";
 
 
 const httpService = axios.create({

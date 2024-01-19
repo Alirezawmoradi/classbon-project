@@ -13,7 +13,9 @@ export function generateDarkenColorFrom(
 
 export function generateForegroundColorFrom(
     input: string,
-    percentage = 0.8
+    percentage
+
+        = 0.8
 ): string {
     return colord(input)
         .mix(colord(input).isDark() ? "white" : "black", percentage)
