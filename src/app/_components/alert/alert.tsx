@@ -10,7 +10,7 @@ export const Alert: React.FC<AlertProps> = ({variant, className, showIcon = true
         className
     )
     return (
-        <div className={classes}>
+        <div className={classes} data-testid='alert'>
             {showIcon && <IconInfo width={18}/>}
             {children}
         </div>
