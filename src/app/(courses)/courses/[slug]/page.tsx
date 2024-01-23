@@ -6,6 +6,8 @@ import {Tabs} from "@/app/_components/tabs";
 import {Accordion} from "@/app/_components/accordian";
 import {Accordian as AccordianType} from "@/types/accordian";
 import CourseComments from "@/app/(courses)/courses/[slug]/_components/comments/course-comments";
+import {CourseChapter} from "@/types/course-chapter.interface";
+import {CourseCurriculum} from "@/app/(courses)/courses/[slug]/_components/curriculum";
 
 export async function generateStaticParams() {
     const slugs = await fetch(`${API_URL}/courses/slugs`).then((res) =>
@@ -24,9 +26,16 @@ async function getCourse(slug: string): Promise<CourseDetails> {
     return res.json();
 }
 
+async function getCurriculum(slug: string): Promise<CourseChapter[]> {
+    const res = await fetch(`${API_URL}/courses/${slug}/curriculum`);
+    return res.json();
+}
+
 export default async function CourseDetails({params}: { params: { slug: string } }) {
     const {slug} = params;
-    const course = await getCourse(slug);
+    const courseData = getCourse(slug);
+    const courseCurriculumData = getCurriculum(slug);
+    const [course, courseCurriculum] = await Promise.all([courseData, courseCurriculumData])
     const faqs: AccordianType[] = course.frequentlyAskedQuestions.map(faq => ({
         id: faq.id,
         title: faq.question,
@@ -49,7 +58,7 @@ export default async function CourseDetails({params}: { params: { slug: string }
     return (
         <div className="container grid grid-cols-10 grid-rows-[1fr 1fr] gap-10 py-10">
             <div
-                className="bg-primary pointer-events-none absolute right-0 aspect-square w-1/2   rounded-full opacity-10 blur-3xl"></div>
+                className="dark:bg-primary pointer-events-none absolute right-0 aspect-square w-1/2   rounded-full opacity-10 blur-3xl"></div>
             <div className="col-span-10 xl:col-span-7">
                 <h1 className='text-center xl:text-right text-2xl lg:text-3xl xl:text-4xl font-black leading-10'>
                     {course.title}
@@ -65,7 +74,12 @@ export default async function CourseDetails({params}: { params: { slug: string }
             <div className='col-span-10 xl:col-span-6'>
                 <Tabs tabs={tabs}/>
             </div>
-            <div className='bg-warning col-span-10 xl:col-span-4'></div>
+            <div className='col-span-10 xl:col-span-4'>
+                <div className='sticky top-5'>
+                    <h2 className='mb-5 text-xl'>سرفصل های دوره</h2>
+                    <CourseCurriculum data={courseCurriculum}/>
+                </div>
+            </div>
         </div>
     )
 }
