@@ -59,9 +59,9 @@ const useVideo = (src: string) => {
         video.src = src;
 
         const updateProgress = () => {
-            const { currentTime, duration } = videoRef.current!;
+            const {currentTime, duration} = videoRef.current!;
             const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-            dispatch({ type: "SET_PROGRESS", progress });
+            dispatch({type: "SET_PROGRESS", progress});
         };
 
         const handleTimeUpdate = () => {
@@ -86,18 +86,18 @@ const useVideo = (src: string) => {
             dispatch({type: 'PAUSE'})
         }
         const handleEnded = () => {
-            dispatch({ type: "SET_FINISHED", isFinished: true });
+            dispatch({type: "SET_FINISHED", isFinished: true});
         };
 
         const handleLoadedData = () => {
-            dispatch({ type: "SET_VIDEO_LOADED", isVideoLoaded: true });
+            dispatch({type: "SET_VIDEO_LOADED", isVideoLoaded: true});
         };
 
         const handleWaiting = () => {
-            dispatch({ type: "SET_VIDEO_WAITED", isVideoWaited: true });
+            dispatch({type: "SET_VIDEO_WAITED", isVideoWaited: true});
         };
         const handlePlaying = () => {
-            dispatch({ type: "SET_VIDEO_WAITED", isVideoWaited: false });
+            dispatch({type: "SET_VIDEO_WAITED", isVideoWaited: false});
         };
 
         const handleEvent = (eventName: string, handler: () => void) => {
@@ -141,3 +141,4 @@ const useVideo = (src: string) => {
         fullScreen
     }
 }
+export default useVideo;

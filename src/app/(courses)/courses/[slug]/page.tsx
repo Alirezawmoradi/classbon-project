@@ -8,6 +8,8 @@ import {Accordian as AccordianType} from "@/types/accordian";
 import CourseComments from "@/app/(courses)/courses/[slug]/_components/comments/course-comments";
 import {CourseChapter} from "@/types/course-chapter.interface";
 import {CourseCurriculum} from "@/app/(courses)/courses/[slug]/_components/curriculum";
+import {VideoPlayer} from "@/app/_components/video-player/video-player";
+import Image from "next/image";
 
 export async function generateStaticParams() {
     const slugs = await fetch(`${API_URL}/courses/slugs`).then((res) =>
@@ -66,7 +68,23 @@ export default async function CourseDetails({params}: { params: { slug: string }
                 <h2 className='mt-4 text-center lg:text-right text-lg leading-9'>
                     {course.subTitle}
                 </h2>
-                <div className='mt-5'>Video Player Component</div>
+                <div className='mt-5'>
+                    {course.videoUrl ? (
+                        <VideoPlayer
+                            src={course.videoUrl}
+                            poster={`${API_URL}/picture/${course.coverImageId}`}
+                        />
+                    ) : (
+                        <Image
+                            src={`https://api.classbon.com/api/picture/${course.coverImageId}`}
+                            alt={course.title}
+                            width={550}
+                            height={327}
+                            className="w-full"
+                        />
+                    )}
+
+                </div>
             </div>
             <div className='col-span-10 xl:col-span-3'>
                 <CourseAside {...course}/>
