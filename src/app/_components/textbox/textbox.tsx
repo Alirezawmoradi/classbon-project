@@ -9,13 +9,19 @@ const sizeClasses: Record<Size, string> = {
     normal: 'textbox-md',
     large: 'textbox-lg',
 };
-export const Textbox: React.FC<TextboxProps> = ({variant='ghost',type='text',className,size='normal',...rest}: TextboxProps) => {
-    const classes =  classNames(
+export const Textbox: React.FC<TextboxProps> = ({
+                                                    variant = 'ghost',
+                                                    type = 'text',
+                                                    className,
+                                                    size = 'normal',
+                                                    ...rest
+                                                }: TextboxProps) => {
+    const classes = classNames(
         'textbox',
         'w-full',
         className,
-        {[`textbox-${variant}`]:variant},
-        {[`${sizeClasses[size]}`]:size}
+        {[`textbox-${variant}`]: variant},
+        {[`${sizeClasses[size]}`]: size}
     )
     return <input type={type} className={classes} {...rest}/>
 }
