@@ -19,8 +19,17 @@ export const VideoPlayer: React.FC<VideoProps> = ({src, poster = ''}: VideoProps
         videoRef,
         play,
         pause,
+        seek,
         fullScreen
     } = useVideo(src)
+    const handleSeekPosition = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!videoRef.current || !videoRef.current.duration || !isVideoLoaded) return;
+        const {left, width} = e.currentTarget.getBoundingClientRect();
+        const clickPosition = (e.clientX - left) / width;
+        if (clickPosition < 0 || clickPosition > 1) return;
+        const newElapsedTimeMs = videoRef.current.duration * clickPosition;
+        seek(newElapsedTimeMs);
+    }
     return (
         <div className="relative">
             {
@@ -61,8 +70,9 @@ export const VideoPlayer: React.FC<VideoProps> = ({src, poster = ''}: VideoProps
                             ? "play"
                             : "pause"}
                 </Button>
-
-                <Progress value={progress} variant="primary"/>
+                <div className='w-full hover:cursor-pointer' onClick={handleSeekPosition}>
+                    <Progress value={progress} variant="primary"/>
+                </div>
                 <div className="flex gap-1 font-semibold text-sm *:w-16">
                     <span>{secondsToHHMMSS(currentTime)}</span> /
                     <span>{secondsToHHMMSS(duration)}</span>
