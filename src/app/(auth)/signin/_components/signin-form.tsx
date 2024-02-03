@@ -30,8 +30,8 @@ const SignInForm = () => {
     const showNotification = useNotificationStore(state => state.showNotification);
     useEffect(() => {
         showNotification({
-            type:'error',
-            message:'error'
+            type:'success',
+            message:'عملیات با موفقیت انجام شد'
         })
     }, []);
 
