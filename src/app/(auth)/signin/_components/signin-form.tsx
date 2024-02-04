@@ -17,24 +17,22 @@ const SignInForm = () => {
     } = useForm<SignIn>();
 
     const router = useRouter();
+
+    const showNotification = useNotificationStore(state => state.showNotification)
+
     const signIn = useSignIn({
         onSuccess: () => {
             router.push(`/verify?mobile=${getValues('mobile')}`);
+            showNotification({
+                message: 'کد تایید به شماره شما ارسال شد',
+                type: 'info'
+            })
         }
     })
 
     const onSubmit = (data: SignIn) => {
         signIn.submit(data);
     }
-
-    const showNotification = useNotificationStore(state => state.showNotification);
-    useEffect(() => {
-        showNotification({
-            type:'success',
-            message:'عملیات با موفقیت انجام شد'
-        })
-    }, []);
-
     return (
         <>
             <h5 className='text-2xl'>ورود | ثبت نام</h5>
