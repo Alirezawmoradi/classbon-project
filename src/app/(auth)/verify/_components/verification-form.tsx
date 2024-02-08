@@ -10,7 +10,7 @@ const VerificationForm = () => {
             <p className="mt-2">دنیای شگفت انگیز برنامه نویسی در انتظار شماست!</p>
             <form className='flex flex-col gap-6 mt-10 flex-1'>
                 <AuthCode className='mt-10' onChange={value => {
-                    //setValue
+                    console.log(value)
                 }}
                 />
                 Timer
