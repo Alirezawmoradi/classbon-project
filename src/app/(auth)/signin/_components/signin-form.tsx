@@ -1,7 +1,7 @@
 'use client';
 import {Button} from "@/app/_components/button";
 import {useForm} from "react-hook-form";
-import {SignIn} from "@/app/(auth)/signin/types/signin.types";
+import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
 import {TextInput} from "@/app/_components/form-input";
 import {useSignIn} from "@/app/(auth)/signin/_api/signin";
 import {useRouter} from "next/navigation";

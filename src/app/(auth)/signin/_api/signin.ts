@@ -1,5 +1,5 @@
 import { createData } from "@/core/http-service/http-service";
-import { SignIn } from "../types/signin.types";
+import { SignIn } from "@/app/(auth)/signin/_types/signin.types";
 import { useMutation } from "@tanstack/react-query";
 
 const signIn = (model: SignIn): Promise<void> =>
