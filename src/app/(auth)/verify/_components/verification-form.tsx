@@ -17,17 +17,8 @@ const VerificationForm = () => {
                 }}
                 />
                 Timer
-                <Button
-                    isLink={true}
-                    onClick={authCodeRef.current?.clear}
-                >
-                    ارسال مجدد کد تایید
-                </Button>
-                <Button
-                    type='submit'
-                    variant='primary'>
-                    تایید و ادامه
-                </Button>
+                <Button isLink={true} onClick={authCodeRef.current?.clear}>ارسال مجدد کد تایید</Button>
+                <Button type='submit' variant='primary'>تایید و ادامه</Button>
 
                 <div className='flex items-start gap-1 justify-center mt-auto'>
                     <span>برای اصلاح شماره موبایل</span>
