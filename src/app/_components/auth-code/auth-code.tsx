@@ -1,18 +1,19 @@
 "use client";
 
-import React, {useEffect, useRef} from "react";
-import {AuthCodeProps, AuthInputProps} from "@/app/_components/auth-code/auth-code.types";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef} from "react";
+import {AuthCodeProps, AuthCodeRef, AuthInputProps} from "@/app/_components/auth-code/auth-code.types";
 import classNames from "classnames";
 
 
-export const AuthCode: React.FC<AuthCodeProps> = ({
-                                                      variant = 'ghost',
-                                                      autoFocus = true,
-                                                      className,
-                                                      isDisabled,
-                                                      length = 5,
-                                                      onChange
-                                                  }: AuthCodeProps) => {
+export const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(({
+                                                                    variant = 'ghost',
+                                                                    autoFocus = true,
+                                                                    className,
+                                                                    isDisabled,
+                                                                    length = 5,
+                                                                    onChange
+                                                                }, ref
+) => {
     if (length < 1) {
         throw new Error('تعداد ارقام باید بزرگ تر از صفر باشد')
     }
@@ -31,7 +32,7 @@ export const AuthCode: React.FC<AuthCodeProps> = ({
     }, [autoFocus]);
 
     const sedResult = () => {
-        const result = inputsRef.current.map((input) => input.value).join('');
+        const result = inputsRef.current.map(input => input.value).join('');
         onChange(result)
     }
 
@@ -72,6 +73,23 @@ export const AuthCode: React.FC<AuthCodeProps> = ({
         sedResult();
     }
 
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            if(inputsRef.current) {
+                inputsRef.current[0].focus();
+            }
+        },
+        clear: () => {
+            if (inputsRef.current) {
+                for (let i = 0; i < inputsRef.current.length; i++) {
+                    inputsRef.current[i].value = ''
+                }
+                inputsRef.current[0].focus();
+            }
+            sedResult();
+        }
+    }))
+
     const classes = classNames('textbox flex-1 w-1 text-center', {
         [`textbox-${variant}`]: variant
 
@@ -105,5 +123,5 @@ export const AuthCode: React.FC<AuthCodeProps> = ({
             </div>
         </>
     )
-}
+})
 export default AuthCode;
