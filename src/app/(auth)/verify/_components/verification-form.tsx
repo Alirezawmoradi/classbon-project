@@ -4,9 +4,15 @@ import Link from "next/link";
 import {AuthCode} from "@/app/_components/auth-code";
 import {useRef} from "react";
 import {AuthCodeRef} from "@/app/_components/auth-code/auth-code.types";
+import {Timer} from "@/app/_components/timer/timer";
 
 const VerificationForm = () => {
     const authCodeRef = useRef<AuthCodeRef>(null);
+    const getTwoMinutesFromNow = () => {
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + 120000);
+        return time;
+    };
     return (
         <>
             <h5 className='text-2xl'>کد تایید</h5>
@@ -16,7 +22,7 @@ const VerificationForm = () => {
                     console.log(value)
                 }}
                 />
-                Timer
+                <Timer expiryTimestamp={getTwoMinutesFromNow()}/>
                 <Button isLink={true} onClick={authCodeRef.current?.clear}>ارسال مجدد کد تایید</Button>
                 <Button type='submit' variant='primary'>تایید و ادامه</Button>
 
