@@ -93,7 +93,7 @@
         }
     }
     &-link {
-        @apply border-transparent bg-transparent dark:text-primary   outline-none h-auto px-1;
+        @apply !border-transparent !bg-transparent dark:text-primary   !outline-none h-auto px-1;
         @media (hover: hover) {
             &:hover {
                 @apply border-transparent bg-transparent underline;
