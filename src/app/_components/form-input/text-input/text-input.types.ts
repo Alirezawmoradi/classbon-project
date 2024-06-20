@@ -4,6 +4,5 @@ import {TextboxProps} from "@/app/_components/textbox/textbox.types";
 export type TextInputProps<TFormValues extends FieldValues> = Omit<TextboxProps, 'name'> & {
     register: UseFormRegister<TFormValues>;
     name: Path<TFormValues>,
-    rules?: RegisterOptions,
     errors?: Partial<DeepMap<TFormValues, FieldError>>
 }
