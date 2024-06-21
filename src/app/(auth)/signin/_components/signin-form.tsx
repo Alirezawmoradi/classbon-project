@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
 import {TextInput} from "@/app/_components/form-input";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {SignInSchema} from "@/app/(auth)/signin/_types/signin.schema";
+import {signInSchema} from "@/app/(auth)/signin/_types/signin.schema";
 import {signInAction} from "@/actions/auth";
 
 const SignInForm = () => {
@@ -14,7 +14,7 @@ const SignInForm = () => {
         formState: {errors},
         getValues
     } = useForm<SignIn>({
-        resolver: zodResolver(SignInSchema)
+        resolver: zodResolver(signInSchema)
     });
 
     // const router = useRouter();
