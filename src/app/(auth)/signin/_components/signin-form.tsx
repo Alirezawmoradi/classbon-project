@@ -3,11 +3,9 @@ import {Button} from "@/app/_components/button";
 import {useForm} from "react-hook-form";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
 import {TextInput} from "@/app/_components/form-input";
-import {useSignIn} from "@/app/(auth)/signin/_api/signin";
-import {useRouter} from "next/navigation";
-import {useNotificationStore} from "@/stores/notification.store";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {SignInSchema} from "@/app/(auth)/signin/_types/signin.schema";
+import {signInAction} from "@/actions/auth";
 
 const SignInForm = () => {
     const {
@@ -19,22 +17,19 @@ const SignInForm = () => {
         resolver: zodResolver(SignInSchema)
     });
 
-    const router = useRouter();
-
-    const showNotification = useNotificationStore(state => state.showNotification)
-
-    const signIn = useSignIn({
-        onSuccess: () => {
-            router.push(`/verify?mobile=${getValues('mobile')}`);
-            showNotification({
-                message: 'کد تایید به شماره شما ارسال شد',
-                type: 'info'
-            })
-        }
-    })
+    // const router = useRouter();
+    //
+    // const showNotification = useNotificationStore(state => state.showNotification)
+    //
+    // router.push(`/verify?mobile=${getValues('mobile')}`);
+    // showNotification({
+    //     message: 'کد تایید به شماره شما ارسال شد',
+    //     type: 'info'
+    // })
 
     const onSubmit = (data: SignIn) => {
-        signIn.submit(data);
+        signInAction(data.mobile);
+        // signIn.submit(data);
     }
     return (
         <>
@@ -47,7 +42,7 @@ const SignInForm = () => {
                     errors={errors}
                 />
 
-                <Button type='submit' variant='primary' isLoading={signIn.isPending}>
+                <Button type='submit' variant='primary'>
                     تایید و دریافت کد
                 </Button>
             </form>
