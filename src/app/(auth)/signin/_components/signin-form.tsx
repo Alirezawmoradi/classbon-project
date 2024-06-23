@@ -8,9 +8,10 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {signInSchema} from "@/app/(auth)/signin/_types/signin.schema";
 import {signInAction} from "@/actions/auth";
 // import {useEffect} from "react";
-// import {useNotificationStore} from "../../../../stores/notification.store";
 // import {useRouter} from "next/navigation";
 import {Alert} from "@/app/_components/alert";
+import {useEffect} from "react";
+import {useNotificationStore} from "@/stores/notification.store";
 
 const SignInForm = () => {
     const {
@@ -23,19 +24,19 @@ const SignInForm = () => {
     });
 
     // const router = useRouter();
-    //
-    // const showNotification = useNotificationStore(state => state.showNotification)
+
+    const showNotification = useNotificationStore(state => state.showNotification)
 
     const [formState, action] = useFormState(signInAction, {message: ''});
 
-    // useEffect(() => {
-    //     if (formState.message) {
-    //         showNotification({
-    //             message: formState.message,
-    //             type: 'error'
-    //         })
-    //     }
-    // }, [formState, showNotification])
+    useEffect(() => {
+        if (formState.message) {
+            showNotification({
+                message: formState.message,
+                type: 'error'
+            })
+        }
+    }, [formState, showNotification])
 
     // const router = useRouter();
     //
