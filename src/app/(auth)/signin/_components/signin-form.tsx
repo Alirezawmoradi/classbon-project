@@ -67,10 +67,10 @@ const SignInForm = () => {
                 <Button type='submit' variant='primary'>
                     تایید و دریافت کد
                 </Button>
-                {/*{*/}
-                {/*    formState.message &&*/}
-                {/*    <Alert variant='error'>{formState.message}</Alert>*/}
-                {/*}*/}
+                {
+                    formState.message &&
+                    <Alert variant='error'>{formState.message}</Alert>
+                }
             </form>
         </>
     );
