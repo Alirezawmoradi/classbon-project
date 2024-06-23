@@ -1,11 +1,16 @@
 'use client';
 import {Button} from "@/app/_components/button";
 import {useForm} from "react-hook-form";
+import {useFormState} from "react-dom";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
 import {TextInput} from "@/app/_components/form-input";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {signInSchema} from "@/app/(auth)/signin/_types/signin.schema";
 import {signInAction} from "@/actions/auth";
+// import {useEffect} from "react";
+// import {useNotificationStore} from "../../../../stores/notification.store";
+// import {useRouter} from "next/navigation";
+import {Alert} from "@/app/_components/alert";
 
 const SignInForm = () => {
     const {
@@ -20,6 +25,21 @@ const SignInForm = () => {
     // const router = useRouter();
     //
     // const showNotification = useNotificationStore(state => state.showNotification)
+
+    const [formState, action] = useFormState(signInAction, {message: ''});
+
+    // useEffect(() => {
+    //     if (formState.message) {
+    //         showNotification({
+    //             message: formState.message,
+    //             type: 'error'
+    //         })
+    //     }
+    // }, [formState, showNotification])
+
+    // const router = useRouter();
+    //
+    // const showNotification = useNotificationStore(state => state.showNotification)
     //
     // router.push(`/verify?mobile=${getValues('mobile')}`);
     // showNotification({
@@ -28,7 +48,10 @@ const SignInForm = () => {
     // })
 
     const onSubmit = (data: SignIn) => {
-        signInAction(data.mobile);
+
+        const formData = new FormData();
+        formData.append('mobile', data.mobile)
+        action(formData);
         // signIn.submit(data);
     }
     return (
@@ -45,6 +68,10 @@ const SignInForm = () => {
                 <Button type='submit' variant='primary'>
                     تایید و دریافت کد
                 </Button>
+                {/*{*/}
+                {/*    formState.message &&*/}
+                {/*    <Alert variant='error'>{formState.message}</Alert>*/}
+                {/*}*/}
             </form>
         </>
     );
