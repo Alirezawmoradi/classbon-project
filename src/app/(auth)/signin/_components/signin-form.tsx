@@ -10,6 +10,7 @@ import {signInAction} from "@/actions/auth";
 import {Alert} from "@/app/_components/alert";
 import {useEffect} from "react";
 import {useNotificationStore} from "@/stores/notification.store";
+import {useRouter} from "next/navigation";
 
 const SignInForm = () => {
     const {
@@ -21,18 +22,25 @@ const SignInForm = () => {
         resolver: zodResolver(signInSchema)
     });
 
-    // const router = useRouter();
+    const router = useRouter();
 
     const showNotification = useNotificationStore(state => state.showNotification)
 
-    const [formState, action] = useFormState(signInAction, {message: ''});
+    const [formState, action] = useFormState(signInAction, null);
 
     useEffect(() => {
-        if (formState.message) {
+        if (formState && !formState.isSuccess && formState.error) {
             showNotification({
-                message: formState.message,
+                message: formState.error?.detail!,
                 type: 'error'
             })
+        } else if (formState && formState.isSuccess) {
+            router.push(`/verify?mobile=${getValues('mobile')}`);
+            showNotification({
+                message: 'کد تایید به شماره شما ارسال شد',
+                type: 'info'
+            })
+            console.log(formState.response);
         }
     }, [formState, showNotification])
 
@@ -40,11 +48,7 @@ const SignInForm = () => {
     //
     // const showNotification = useNotificationStore(state => state.showNotification)
     //
-    // router.push(`/verify?mobile=${getValues('mobile')}`);
-    // showNotification({
-    //     message: 'کد تایید به شماره شما ارسال شد',
-    //     type: 'info'
-    // })
+
 
     const onSubmit = (data: SignIn) => {
 
@@ -68,8 +72,8 @@ const SignInForm = () => {
                     تایید و دریافت کد
                 </Button>
                 {
-                    formState.message &&
-                    <Alert variant='error'>{formState.message}</Alert>
+                    formState && !formState.isSuccess && formState.error &&
+                    <Alert variant='error'>{formState.error?.detail}</Alert>
                 }
             </form>
         </>
