@@ -1,7 +1,6 @@
 "use server";
 
 import { OperationResult } from "@/types/operation-result";
-import { redirect } from "next/navigation";
 import { createData } from "@/core/http-service/http-service";
 import {serverActionWrapper} from "@/actions/server-actions-wrapper";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
