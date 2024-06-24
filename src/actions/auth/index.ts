@@ -1,26 +1,30 @@
-'use server'
+"use server";
 
-import {redirect} from "next/navigation";
-import {signInSchema} from "@/app/(auth)/signin/_types/signin.schema";
+import { OperationResult } from "@/types/operation-result";
+import { redirect } from "next/navigation";
+import { createData } from "@/core/http-service/http-service";
+import {serverActionWrapper} from "@/actions/server-actions-wrapper";
+import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
 
-export async function signInAction(formState: { message: string }, formData: FormData) {
+export async function signInAction(
+    formState: OperationResult<string> | null,
+    formData: FormData
+) {
+    const mobile = formData.get("mobile") as string;
+    // const validatedData = signInSchema.safeParse({
+    //     mobile,
+    // });
 
-    const mobile = formData.get('mobile');
-
-    const validatedData = signInSchema.safeParse({
-        mobile
-    });
-    if (!validatedData.success) {
-        return {
-            message: 'خطا در فرمت موبایل'
-        }
-    } else {
-        try {
-            throw 'خطا در برقراری ارتباط با سرور'
-        } catch (error) {
-            return {
-                message: error as string
-            }
-        }
-    }
+    // if (!validatedData.success) {
+    //     return {
+    //         message: "خطا در فرمت موبایل",
+    //     };
+    // } else {
+    return serverActionWrapper(
+        async () =>
+            await createData<SignIn, string>("/signin", {
+                mobile,
+            })
+    );
+    // }
 }
