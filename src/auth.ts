@@ -31,9 +31,11 @@ export const {
             async authorize(credentials) {
                 try {
                     const user = await createData<VerifyUserModel, User>(`${API_URL}/verify`, {
-                        username: credentials.username as string,
-                        code: credentials.code as string
-                    })
+                            username: credentials.username as string,
+                            code: credentials.code as string
+                        }
+                    );
+                    console.log(user)
                     return {
                         accessToken: user.token
                     }
