@@ -3,7 +3,7 @@ import {authConfig} from "@/auth.config";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {createData} from "@/core/http-service/http-service";
 import {VerifyUserModel} from "@/app/(auth)/verify/_types/verify-user.type";
-import {User, UserToken} from "@/types/user.interface";
+import {User, UserSession, UserToken} from "@/types/user.interface";
 import {API_URL} from "@/configs/global";
 import {jwtDecode} from "jwt-decode";
 import {JWT} from "next-auth/jwt";
@@ -11,6 +11,10 @@ import {JWT} from "next-auth/jwt";
 declare module 'next-auth' {
     interface User {
         accessToken: string;
+    }
+
+    interface session {
+        user: UserSession
     }
 }
 declare module 'next-auth/jwt' {
@@ -56,13 +60,12 @@ export const {
             if (user) {
                 token.user = jwtDecode<UserToken>(user.accessToken);
                 token.user.accessToken = user.accessToken;
-
-                console.log(token.user)
             }
             return token
         },
-        // async session() {
-        //
-        // }
+        async session({session, token}) {
+            Object.assign(session.user, token.user ?? {});
+            return session
+        }
     }
 })
