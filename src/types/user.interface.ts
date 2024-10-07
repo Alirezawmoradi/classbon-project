@@ -4,8 +4,8 @@ export interface User {
 
 export interface UserToken {
     mobile?: string;
-    image?: number;
-    full_name?: string;
+    picture?: number;
+    fullName?: string;
     exp: number;
     accessToken: string;
 }
