@@ -4,8 +4,7 @@ import {OperationResult} from "@/types/operation-result";
 import {createData} from "@/core/http-service/http-service";
 import {serverActionWrapper} from "@/actions/server-actions-wrapper";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
-import {SendAuthCode} from "@/app/(auth)/verify/_types/verify-user.type";
-import {Problem} from "@/types/http-errors.interface";
+import {SendAuthCode, VerifyUserModel} from "@/app/(auth)/verify/_types/verify-user.type";
 import {signIn, signOut} from "@/auth";
 
 export async function signInAction(
@@ -40,14 +39,18 @@ export async function sendAuthCode(
     )
 }
 
-export async function verify(state: Problem | undefined, formData: FormData) {
+export async function verify(prevState: OperationResult<void> | undefined, model: VerifyUserModel) {
     try {
-        await signIn('credentials', formData)
-    } catch (error) {
+        await signIn('credentials', {
+            username: model.username,
+            code: model.code,
+            redirect: false
+        });
         return {
-            status: 0,
-            title: '',
-        } satisfies Problem
+            isSuccess: true
+        } satisfies OperationResult<void>
+    } catch (error) {
+        throw new Error('');
     }
 }
 
