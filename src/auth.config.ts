@@ -18,6 +18,12 @@ export const authConfig = {
                 return Response.redirect(new URL('/student/courses', nextUrl));
             }
 
+            const isProtectedRoutes = nextUrl.pathname.startsWith('/student');
+
+            if (isProtectedRoutes && !isAuthenticated) {
+                return Response.redirect(new URL('/signin', nextUrl));
+            }
+
             return true;
 
         }
