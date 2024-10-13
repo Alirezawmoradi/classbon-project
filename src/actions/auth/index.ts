@@ -1,11 +1,16 @@
 "use server";
 
 import {OperationResult} from "@/types/operation-result";
+import {redirect} from "next/navigation";
 import {createData} from "@/core/http-service/http-service";
-import {serverActionWrapper} from "@/actions/server-actions-wrapper";
+import {
+    SendAuthCode,
+    VerifyUserModel,
+} from "@/app/(auth)/verify/_types/verify-user.type";
+import {Problem} from "@/types/http-errors.interface";
+import {AuthorizeError, signIn, signOut} from "@/auth";
 import {SignIn} from "@/app/(auth)/signin/_types/signin.types";
-import {SendAuthCode, VerifyUserModel} from "@/app/(auth)/verify/_types/verify-user.type";
-import {signIn, signOut} from "@/auth";
+import {serverActionWrapper} from "@/actions/server-actions-wrapper";
 
 export async function signInAction(
     formState: OperationResult<string> | null,
@@ -35,25 +40,44 @@ export async function sendAuthCode(
     mobile: string
 ) {
     return serverActionWrapper(
-        async () => await createData<SendAuthCode, string>("/send-auth-code", {mobile})
-    )
+        async () =>
+            await createData<SendAuthCode, string>("/send-auth-code", {
+                mobile,
+            })
+    );
 }
 
-export async function verify(prevState: OperationResult<void> | undefined, model: VerifyUserModel) {
+export async function verify(
+    prevState: OperationResult<void> | undefined,
+    model: VerifyUserModel
+) {
     try {
-        await signIn('credentials', {
+        await signIn("credentials", {
             username: model.username,
             code: model.code,
-            redirect: false
+            redirect: false,
         });
         return {
-            isSuccess: true
-        } satisfies OperationResult<void>
+            isSuccess: true,
+        } satisfies OperationResult<void>;
     } catch (error) {
-        throw new Error('');
+        if (error instanceof AuthorizeError) {
+            return {
+                isSuccess: false,
+                error: error.problem!,
+            } satisfies OperationResult<void>;
+        }
+        throw new Error("");
     }
 }
 
-export async function logout() {
-    await signOut();
+export async function logout(prevState: OperationResult<void> | undefined) {
+    try {
+        await signOut({redirect: false});
+        return {
+            isSuccess: true,
+        } satisfies OperationResult<void>;
+    } catch (error) {
+        throw new Error("");
+    }
 }
